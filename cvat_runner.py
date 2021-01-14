@@ -74,14 +74,19 @@ class CVATRunner:
 
         return response.json()
 
-    def upload_shared_data(self, task_id, files_paths: List[str]):
+    def upload_shared_data(self, task_id, file_paths: List[str]):
         """
         Uploads data from connected file share to given task creating a new job
         :param task_id: task id to upload ded
         :param files_paths: file paths from file share
         :return:
         """
-        data = {f'server_files[{i}]': x for i, x in enumerate(files_paths)}
+        for i in range(len(file_paths)):
+            if file_paths[i][0] != '/':
+                # All files should have / on the beginning with path from shared folder
+                file_paths[i] = '/' + file_paths[i]
+
+        data = {f'server_files[{i}]': x for i, x in enumerate(file_paths)}
         data['image_quality'] = '70'
         data['use_zip_chunks'] = 'true'
         data['use_cache'] = 'true'
