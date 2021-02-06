@@ -10,7 +10,7 @@ def main():
     runner = CVATRunner(
         url='http://localhost:8080',
         username='',  # username here
-        password=''  # password here
+        password=''  # password  here
     )
 
     # Next you need to create task with original name
