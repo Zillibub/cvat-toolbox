@@ -1,9 +1,9 @@
 import json
 import requests
-from tenacity import retry, retry_if_result, stop_after_attempt
+from tenacity import retry, retry_if_result, stop_after_attempt, wait_fixed
 
 
-@retry(retry=retry_if_result(lambda x: x.status_code == 200), stop=stop_after_attempt(5), wait=0.05)
+@retry(retry=retry_if_result(lambda x: x.status_code == 202), stop=stop_after_attempt(5), wait=wait_fixed(0.05))
 def get_successful_request(request: requests.Request) -> requests.Response:
     """
     First cvat response sometimes is 202 without any actions
